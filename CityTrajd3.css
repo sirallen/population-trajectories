@@ -1,0 +1,45 @@
+body {
+  padding-top: 60px;
+}
+
+.line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1.5px;
+  cursor: default;
+}
+
+.transparent {
+  fill: none;
+  stroke: black;
+  stroke-width: 10px;
+  cursor: default;
+  opacity: 0;
+}
+
+.label {
+  font-size: 10px;
+  font-family: sans-serif;
+  font-weight: lighter;
+  fill: gray;
+}
+
+.grid line {
+  stroke: lightgray;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+/* checkboxGroupInput alignment */
+.checkbox-inline { 
+  font-family: Consolas;
+  margin-left: 0px;
+  margin-right: 10px;
+}
+
+.checkbox-inline+.checkbox-inline {
+  margin-left: 0px;
+  margin-right: 10px;
+}
