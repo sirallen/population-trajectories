@@ -28,7 +28,7 @@ Shiny.addCustomMessageHandler('CurveFitMethod', function(message) {
 /* Top-level variables */
 var svg, plotWidth, plotHeight, scaleX, scaleY, cities, baseYear = 2000;
 
-var line, curveFun = d3.curveBasis;
+var line, curveFun = d3.curveLinear;
 
 parse_el = function(el) {
     var rowdata = [];
@@ -155,28 +155,41 @@ updateChart = function(cities) {
        .append('g')
        .attr('class', 'city')
        .on('mouseover', function(z) {
-        d3.select(this).select('.line').transition()
+        d3.select(this).select('.line').transition('A')
           .duration(250)
           .style('stroke-width', '3px')
           .style('stroke', 'black')
-        d3.select(this).select('.label').transition()
+        d3.select(this).select('.label').transition('B')
           .duration(250)
           .style('fill', 'black')
 
       })
       .on('mouseout', function(z) {
-        d3.select(this).select('.line').transition()
+        d3.select(this).select('.line').transition('A')
           .duration(250)
           .style('stroke-width', '1.5px')
           .style('stroke', 'gray')
-        d3.select(this).select('.label').transition()
+        d3.select(this).select('.label').transition('B')
           .duration(250)
           .style('fill', 'gray')
       });;
 
-  city.append('path')
+  var paths = city.append('path')
       .attr('class', 'line')
       .attr('d', line);
+
+  var pathLengths =
+    paths.nodes().map(function(node) {return node.getTotalLength()});
+
+  paths.each(function(p, i) {
+    d3.select(this)
+      .attr('stroke-dasharray', pathLengths[i] + ' ' + pathLengths[i])
+      .attr('stroke-dashoffset', pathLengths[i])
+      .transition()
+      .duration(2000)
+      .ease(d3.easeLinear)
+      .attr('stroke-dashoffset', 0);
+    });
 
   city.append('path')
       .attr('class', 'transparent')

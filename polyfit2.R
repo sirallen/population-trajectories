@@ -35,7 +35,7 @@ polyfit2 = function(x, y, k = 5, lambda=.5) {
 
 # A simple predict method
 predict.polyfit2 = function(coef, newX) {
-  fit = Poly(newX, k) %*% coef
+  fit = Poly(newX, length(coef)) %*% coef
   as.vector(fit)
 }
 
